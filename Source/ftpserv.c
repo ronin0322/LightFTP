@@ -1932,6 +1932,9 @@ void *ftpmain(void *p)
             sendstring_plaintext(clientsocket, NOSLOTS);
             close(clientsocket);
         }
+        //Terminate the main thread when the child thread terminates
+		pthread_join(th, NULL);
+        break;
     }
 
     free(scb);

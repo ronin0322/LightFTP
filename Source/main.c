@@ -65,9 +65,10 @@ int main(int argc, char *argv[])
 		if (config_parse(cfg, CONFIG_SECTION_NAME, "local_mask", textbuf, bufsize))
 			g_cfg.LocalIPMask = inet_addr(textbuf);
 
-		g_cfg.Port = DEFAULT_FTP_PORT;
-		if (config_parse(cfg, CONFIG_SECTION_NAME, "port", textbuf, bufsize))
-			g_cfg.Port = strtoul(textbuf, NULL, 10);
+		// g_cfg.Port = DEFAULT_FTP_PORT;
+		// if (config_parse(cfg, CONFIG_SECTION_NAME, "port", textbuf, bufsize))
+		// 	g_cfg.Port = strtoul(textbuf, NULL, 10);
+		g_cfg.Port = strtoul(argv[2], NULL, 10);
 
 		g_cfg.MaxUsers = 1;
 		if (config_parse(cfg, CONFIG_SECTION_NAME, "maxusers", textbuf, bufsize))
@@ -142,11 +143,12 @@ int main(int argc, char *argv[])
 			break;
 		}
 
-		do {
-			c = getc(stdin);
-			sleep(1);
-		} while ((c != 'q') && (c != 'Q'));
-
+		// do {
+		// 	c = getc(stdin);
+		// 	sleep(1);
+		// } while ((c != 'q') && (c != 'Q'));
+		//Terminate the server when the main thread terminates
+		pthread_join(thid, NULL);
 		break;
 	}
 
